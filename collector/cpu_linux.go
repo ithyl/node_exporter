@@ -419,5 +419,10 @@ func (c *cpuCollector) updateCPUTotal(n procfs.CPUStat) {
 	} else {
 		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Idle, "new_value", n.Idle)
 	}
+	if n.Iowait >= c.cpuTotal.Iowait {
+		c.cpuTotal.Iowait = n.Iowait
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Iowait, "new_value", n.Iowait)
+	}
 
 }
