@@ -23,7 +23,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/procfs"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"os/exec"
 	_ "os/exec"
 	"path/filepath"
 	"regexp"
@@ -288,6 +287,9 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	c.updateCPUStats(stats.CPU)
 	c.updateCPUTotal(stats.CPUTotal)
 	cpuNum := len(c.cpuStats)
+	info, err := c.fs.CPUInfo()
+	n := len(info)
+
 	// Acquire a lock to read the stats.
 	c.cpuStatsMutex.Lock()
 	defer c.cpuStatsMutex.Unlock()
@@ -314,12 +316,9 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System, "tt", "system")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait, "tt", "iowait")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
-	cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
-	pid, err := cmd.Output()
-	if err != nil {
-		level.Info(c.logger).Log("msg", " cpu physical error")
-	}
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), string(pid), "num")
+	//cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
+	pid := info[n].PhysicalID
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), pid, "num")
 
 	return nil
 }
