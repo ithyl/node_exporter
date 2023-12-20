@@ -23,6 +23,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/procfs"
 	"gopkg.in/alecthomas/kingpin.v2"
+	"os/exec"
+	_ "os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -312,7 +314,12 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System, "tt", "system")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait, "tt", "iowait")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), "tt", "num")
+	cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
+	pid, err := cmd.Output()
+	if err != nil {
+		level.Info(c.logger).Log("msg", " cpu physical error")
+	}
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), string(pid), "num")
 
 	return nil
 }
