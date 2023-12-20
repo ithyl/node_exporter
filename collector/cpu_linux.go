@@ -283,8 +283,9 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 		return err
 	}
 
-	//c.updateCPUStats(stats.CPU)
+	c.updateCPUStats(stats.CPU)
 	c.updateCPUTotal(stats.CPUTotal)
+	cpuNum := len(c.cpuStats)
 	// Acquire a lock to read the stats.
 	c.cpuStatsMutex.Lock()
 	defer c.cpuStatsMutex.Unlock()
@@ -311,6 +312,7 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System, "tt", "system")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait, "tt", "iowait")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), "tt", "num")
 
 	return nil
 }
