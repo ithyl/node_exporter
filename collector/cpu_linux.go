@@ -286,7 +286,7 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 
 	c.updateCPUStats(stats.CPU)
 	c.updateCPUTotal(stats.CPUTotal)
-	cpuNum := len(c.cpuStats)
+	cpuNum := float64(len(c.cpuStats))
 	info, err := c.fs.CPUInfo()
 	n := len(info) - 1
 
@@ -312,18 +312,18 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	//		ch <- prometheus.MustNewConstMetric(c.cpuGuest, prometheus.CounterValue, cpuStat.GuestNice, cpuNum, "nice")
 	//	}
 	//}
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.User, "tt", "user")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System, "tt", "system")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait, "tt", "iowait")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), "tt", "vNum")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.User/cpuNum, "tt", "user")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System/cpuNum, "tt", "system")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait/cpuNum, "tt", "iowait")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle/cpuNum, "tt", "idle")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, cpuNum, "tt", "vNum")
 
 	//cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
-	pid := info[n].PhysicalID
+	pid := info[n].CPUCores
 	level.Info(c.logger).Log(info, "n的值", n)
 
-	pi, err := strconv.ParseFloat(pid, 64)
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, pi, "tt", "pNum")
+	//pi, err := strconv.ParseFloat(pid, 64)
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(pid), "tt", "pNum")
 
 	return nil
 }
