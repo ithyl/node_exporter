@@ -316,13 +316,14 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System, "tt", "system")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait, "tt", "iowait")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), "vNum")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), "tt", "vNum")
 
 	//cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
 	pid := info[n].PhysicalID
 	level.Info(c.logger).Log(info, "n的值", n)
+
 	pi, err := strconv.ParseFloat(pid, 64)
-	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, pi, "pNum")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, pi, "tt", "pNum")
 
 	return nil
 }
