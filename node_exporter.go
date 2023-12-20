@@ -176,7 +176,7 @@ func main() {
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
 	logger := promlog.New(promlogConfig)
-
+	*disableExporterMetrics = true
 	if *disableDefaultCollectors {
 		collector.DisableDefaultCollectors()
 	}

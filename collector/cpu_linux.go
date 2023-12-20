@@ -138,10 +138,11 @@ func (c *cpuCollector) Update(ch chan<- prometheus.Metric) error {
 			return err
 		}
 	}
-	if err := c.updateStat(ch); err != nil {
-		return err
-	}
-	return c.updateThermalThrottle(ch)
+	//if err := c.updateStat(ch); err != nil {
+	//	return err
+	//}
+	//return c.updateThermalThrottle(ch)
+	return c.updateStat(ch)
 }
 
 // updateInfo reads /proc/cpuinfo
