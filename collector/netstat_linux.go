@@ -45,7 +45,7 @@ type netStatCollector struct {
 }
 
 func init() {
-	registerCollector("netstat", defaultEnabled, NewNetStatCollector)
+	registerCollector("netstat", defaultDisabled, NewNetStatCollector)
 }
 
 // NewNetStatCollector takes and returns

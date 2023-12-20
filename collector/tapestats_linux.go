@@ -49,7 +49,7 @@ type tapestatsCollector struct {
 }
 
 func init() {
-	registerCollector("tapestats", defaultEnabled, NewTapestatsCollector)
+	registerCollector("tapestats", defaultDisabled, NewTapestatsCollector)
 }
 
 // NewTapestatsCollector returns a new Collector exposing tape device stats.

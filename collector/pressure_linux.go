@@ -45,7 +45,7 @@ type pressureStatsCollector struct {
 }
 
 func init() {
-	registerCollector("pressure", defaultEnabled, NewPressureStatsCollector)
+	registerCollector("pressure", defaultDisabled, NewPressureStatsCollector)
 }
 
 // NewPressureStatsCollector returns a Collector exposing pressure stall information

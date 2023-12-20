@@ -37,7 +37,7 @@ type powerSupplyClassCollector struct {
 }
 
 func init() {
-	registerCollector("powersupplyclass", defaultEnabled, NewPowerSupplyClassCollector)
+	registerCollector("powersupplyclass", defaultDisabled, NewPowerSupplyClassCollector)
 }
 
 func NewPowerSupplyClassCollector(logger log.Logger) (Collector, error) {

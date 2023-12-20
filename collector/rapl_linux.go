@@ -34,7 +34,7 @@ type raplCollector struct {
 }
 
 func init() {
-	registerCollector("rapl", defaultEnabled, NewRaplCollector)
+	registerCollector("rapl", defaultDisabled, NewRaplCollector)
 }
 
 // NewRaplCollector returns a new Collector exposing RAPL metrics.

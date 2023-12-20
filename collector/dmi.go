@@ -34,7 +34,7 @@ type dmiCollector struct {
 }
 
 func init() {
-	registerCollector("dmi", defaultEnabled, NewDMICollector)
+	registerCollector("dmi", defaultDisabled, NewDMICollector)
 }
 
 // NewDMICollector returns a new Collector exposing DMI information.

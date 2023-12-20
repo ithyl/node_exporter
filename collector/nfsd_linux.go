@@ -36,7 +36,7 @@ type nfsdCollector struct {
 }
 
 func init() {
-	registerCollector("nfsd", defaultEnabled, NewNFSdCollector)
+	registerCollector("nfsd", defaultDisabled, NewNFSdCollector)
 }
 
 const (

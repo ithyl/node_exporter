@@ -33,7 +33,7 @@ type nvmeCollector struct {
 }
 
 func init() {
-	registerCollector("nvme", defaultEnabled, NewNVMeCollector)
+	registerCollector("nvme", defaultDisabled, NewNVMeCollector)
 }
 
 // NewNVMeCollector returns a new Collector exposing NVMe stats.

@@ -49,7 +49,7 @@ type uname struct {
 }
 
 func init() {
-	registerCollector("uname", defaultEnabled, newUnameCollector)
+	registerCollector("uname", defaultDisabled, newUnameCollector)
 }
 
 // NewUnameCollector returns new unameCollector.

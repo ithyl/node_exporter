@@ -35,11 +35,11 @@ type bondingCollector struct {
 }
 
 func init() {
-	registerCollector("bonding", defaultEnabled, NewBondingCollector)
+	registerCollector("bonding", defaultDisabled, NewBondingCollector)
 }
 
 // NewBondingCollector returns a newly allocated bondingCollector.
-// It exposes the number of configured and active slave of linux bonding interfaces.
+// It exposes the number of configured and active slave of linux onding interfaces.
 func NewBondingCollector(logger log.Logger) (Collector, error) {
 	return &bondingCollector{
 		slaves: typedDesc{prometheus.NewDesc(

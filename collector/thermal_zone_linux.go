@@ -36,7 +36,7 @@ type thermalZoneCollector struct {
 }
 
 func init() {
-	registerCollector("thermal_zone", defaultEnabled, NewThermalZoneCollector)
+	registerCollector("thermal_zone", defaultDisabled, NewThermalZoneCollector)
 }
 
 // NewThermalZoneCollector returns a new Collector exposing kernel/system statistics.

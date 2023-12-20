@@ -40,7 +40,7 @@ type statCollector struct {
 var statSoftirqFlag = kingpin.Flag("collector.stat.softirq", "Export softirq calls per vector").Default("false").Bool()
 
 func init() {
-	registerCollector("stat", defaultEnabled, NewStatCollector)
+	registerCollector("stat", defaultDisabled, NewStatCollector)
 }
 
 // NewStatCollector returns a new Collector exposing kernel/system statistics.

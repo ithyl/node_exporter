@@ -36,7 +36,7 @@ type infinibandCollector struct {
 }
 
 func init() {
-	registerCollector("infiniband", defaultEnabled, NewInfiniBandCollector)
+	registerCollector("infiniband", defaultDisabled, NewInfiniBandCollector)
 }
 
 // NewInfiniBandCollector returns a new Collector exposing InfiniBand stats.

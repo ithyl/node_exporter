@@ -43,7 +43,7 @@ type netClassCollector struct {
 }
 
 func init() {
-	registerCollector("netclass", defaultEnabled, NewNetClassCollector)
+	registerCollector("netclass", defaultDisabled, NewNetClassCollector)
 }
 
 // NewNetClassCollector returns a new Collector exposing network class stats.
