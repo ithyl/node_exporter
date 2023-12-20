@@ -318,6 +318,7 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle, "tt", "idle")
 	//cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
 	pid := info[n].PhysicalID
+	level.Info(c.logger).Log(info, "n的值", n)
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, float64(cpuNum), pid, "num")
 
 	return nil
