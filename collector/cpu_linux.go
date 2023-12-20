@@ -288,7 +288,7 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	c.updateCPUTotal(stats.CPUTotal)
 	cpuNum := len(c.cpuStats)
 	info, err := c.fs.CPUInfo()
-	n := len(info)
+	n := len(info) - 1
 
 	// Acquire a lock to read the stats.
 	c.cpuStatsMutex.Lock()
