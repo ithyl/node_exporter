@@ -62,7 +62,7 @@ type timexCollector struct {
 }
 
 func init() {
-	registerCollector("timex", defaultEnabled, NewTimexCollector)
+	registerCollector("timex", defaultDisabled, NewTimexCollector)
 }
 
 // NewTimexCollector returns a new Collector exposing adjtime(3) stats.
