@@ -316,6 +316,12 @@ func (c *cpuCollector) updateStat(ch chan<- prometheus.Metric) error {
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.System/cpuNum, "tt", "system")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Iowait/cpuNum, "tt", "iowait")
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Idle/cpuNum, "tt", "idle")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Guest/cpuNum, "tt", "guest")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.GuestNice/cpuNum, "tt", "guestNice")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.Steal/cpuNum, "tt", "steal")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.SoftIRQ/cpuNum, "tt", "softIRQ")
+	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, c.cpuTotal.IRQ/cpuNum, "tt", "IRQ")
+
 	ch <- prometheus.MustNewConstMetric(c.cpu, prometheus.CounterValue, cpuNum, "tt", "vNum")
 
 	//cmd := exec.Command("cat /proc/cpuInfo |grep 'physical id' |awk '{print $4}'|tail -1")
@@ -438,5 +444,34 @@ func (c *cpuCollector) updateCPUTotal(n procfs.CPUStat) {
 	} else {
 		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Iowait, "new_value", n.Iowait)
 	}
-
+	if n.Nice >= c.cpuTotal.Nice {
+		c.cpuTotal.Nice = n.Nice
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Nice, "new_value", n.Nice)
+	}
+	if n.Guest >= c.cpuTotal.Guest {
+		c.cpuTotal.Guest = n.Guest
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Guest, "new_value", n.Guest)
+	}
+	if n.Steal >= c.cpuTotal.Steal {
+		c.cpuTotal.Steal = n.Steal
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.Steal, "new_value", n.Steal)
+	}
+	if n.GuestNice >= c.cpuTotal.GuestNice {
+		c.cpuTotal.GuestNice = n.GuestNice
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.GuestNice, "new_value", n.GuestNice)
+	}
+	if n.IRQ >= c.cpuTotal.IRQ {
+		c.cpuTotal.IRQ = n.IRQ
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.IRQ, "new_value", n.IRQ)
+	}
+	if n.SoftIRQ >= c.cpuTotal.SoftIRQ {
+		c.cpuTotal.SoftIRQ = n.SoftIRQ
+	} else {
+		level.Debug(c.logger).Log("msg", "CPU System counter jumped backwards", "cpu", 1, "old_value", c.cpuTotal.SoftIRQ, "new_value", n.SoftIRQ)
+	}
 }
