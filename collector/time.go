@@ -42,7 +42,7 @@ func NewTimeCollector(logger log.Logger) (Collector, error) {
 	const subsystem = "time"
 	return &timeCollector{
 		now: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "seconds"),
+			prometheus.BuildFQName(namespace, "", subsystem),
 			"System time in seconds since epoch (1970).",
 			nil, nil,
 		), prometheus.GaugeValue},
