@@ -49,7 +49,7 @@ type netDevCollector struct {
 type netDevStats map[string]map[string]uint64
 
 func init() {
-	registerCollector("netdev", defaultDisabled, NewNetDevCollector)
+	registerCollector("netdev", defaultEnabled, NewNetDevCollector)
 }
 
 // NewNetDevCollector returns a new Collector exposing network device stats.
