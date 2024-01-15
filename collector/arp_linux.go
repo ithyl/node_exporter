@@ -36,7 +36,8 @@ var (
 type arpCollector struct {
 	deviceFilter netDevFilter
 	entries      *prometheus.Desc
-	logger       log.Logger
+
+	logger log.Logger
 }
 
 func init() {

@@ -29,7 +29,7 @@ var (
 	diskLabelNames = []string{"device"}
 
 	readsCompletedDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, diskSubsystem, "reads_completed"),
+		prometheus.BuildFQName(namespace, diskSubsystem, "reads_completed_total"),
 		"The total number of reads completed successfully.",
 		diskLabelNames, nil,
 	)
@@ -41,7 +41,7 @@ var (
 	)
 
 	writesCompletedDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, diskSubsystem, "writes_completed"),
+		prometheus.BuildFQName(namespace, diskSubsystem, "writes_completed_total"),
 		"The total number of writes completed successfully.",
 		diskLabelNames, nil,
 	)

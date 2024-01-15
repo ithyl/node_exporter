@@ -60,7 +60,7 @@ func (c *meminfoCollector) Update(ch chan<- prometheus.Metric) error {
 		}
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, memInfoSubsystem, k),
+				prometheus.BuildFQName(namespace, memInfoSubsystem, k+"_bytes"),
 				fmt.Sprintf("Memory information field %s.", k),
 				nil, nil,
 			),

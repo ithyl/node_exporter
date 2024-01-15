@@ -39,7 +39,7 @@ func init() {
 // NewTimeCollector returns a new Collector exposing the current system time in
 // seconds since epoch.
 func NewTimeCollector(logger log.Logger) (Collector, error) {
-	const subsystem = "time"
+	const subsystem = "time_seconds"
 	return &timeCollector{
 		now: typedDesc{prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, "", subsystem),

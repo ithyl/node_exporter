@@ -67,7 +67,7 @@ func NewStatCollector(logger log.Logger) (Collector, error) {
 			nil, nil,
 		),
 		btime: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "boot_time"),
+			prometheus.BuildFQName(namespace, "", "boot_time_seconds"),
 			"Node boot time, in unixtime.",
 			nil, nil,
 		),

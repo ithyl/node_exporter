@@ -98,7 +98,7 @@ func (c *netDevCollector) metricDesc(key string) *prometheus.Desc {
 
 	if _, ok := c.metricDescs[key]; !ok {
 		c.metricDescs[key] = prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, key),
+			prometheus.BuildFQName(namespace, c.subsystem, key+"_total"),
 			fmt.Sprintf("Network device statistic %s.", key),
 			[]string{"device"},
 			nil,
